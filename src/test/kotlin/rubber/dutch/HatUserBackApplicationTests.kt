@@ -1,4 +1,4 @@
-package rudder.dutch
+package rubber.dutch
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest

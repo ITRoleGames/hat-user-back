@@ -1,4 +1,4 @@
-package rudder.dutch
+package rubber.dutch
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
