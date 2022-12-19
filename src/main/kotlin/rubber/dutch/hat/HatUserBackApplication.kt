@@ -1,4 +1,4 @@
-package rubber.dutch
+package rubber.dutch.hat
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
