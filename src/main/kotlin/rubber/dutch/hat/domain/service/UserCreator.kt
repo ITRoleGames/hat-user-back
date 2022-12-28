@@ -14,7 +14,7 @@ class UserCreator(
     fun createUser(): User {
         val user = User(
             userId = generateUuid(),
-            accessToken = generateUuid(),
+            accessToken = generateUuid(), //TODO: выяснить что с этим делать
             name = nameGenerator.generateName()
         )
         return userSaver.save(user)
