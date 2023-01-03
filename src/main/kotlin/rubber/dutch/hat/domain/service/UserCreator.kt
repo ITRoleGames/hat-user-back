@@ -25,6 +25,6 @@ class UserCreator(
     }
 
     private fun generateToken(): String {
-        return generateUuid().toString().replace("-", "")
+        return generateUuid().toString()
     }
 }
