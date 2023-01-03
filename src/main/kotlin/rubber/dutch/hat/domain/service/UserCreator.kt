@@ -14,7 +14,7 @@ class UserCreator(
     fun createUser(): User {
         val user = User(
             userId = generateUuid(),
-            accessToken = generateToken(), //TODO: выяснить что с этим делать
+            accessToken = generateUuid(), //TODO: выяснить что с этим делать
             name = nameGenerator.generateName()
         )
         return userSaver.save(user)
@@ -22,9 +22,5 @@ class UserCreator(
 
     private fun generateUuid(): UUID {
         return UUID.randomUUID()
-    }
-
-    private fun generateToken(): String {
-        return generateUuid().toString()
     }
 }

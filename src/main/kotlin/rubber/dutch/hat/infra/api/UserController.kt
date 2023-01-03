@@ -15,6 +15,7 @@ import rubber.dutch.hat.domain.exception.AuthorizationHeaderNotFoundException
 import rubber.dutch.hat.domain.exception.UserNotFoundException
 import rubber.dutch.hat.infra.api.dto.ErrorCode
 import rubber.dutch.hat.infra.api.dto.ErrorResponse
+import java.util.UUID
 
 @RestController
 class UserController(
@@ -50,7 +51,7 @@ class UserController(
     fun currentUser(@RequestHeader headers: HttpHeaders): UserResponse {
         val accessToken = headers.get(HttpHeaders.AUTHORIZATION)?.get(0)?.replace("Bearer ", "")
             ?: throw AuthorizationHeaderNotFoundException()
-        return findUserUsecase.execute(accessToken)
+        return findUserUsecase.execute(UUID.fromString(accessToken))
     }
 
     @ExceptionHandler(UserNotFoundException::class)
@@ -61,5 +62,10 @@ class UserController(
     @ExceptionHandler(AuthorizationHeaderNotFoundException::class)
     fun authHeaderNotFoundError(): ErrorResponse {
         return ErrorResponse(ErrorCode.AUTHORIZATION_HEADER_NOT_FOUND)
+    }
+
+    @ExceptionHandler(IllegalArgumentException::class)
+    fun IllegalArgumentError(): ErrorResponse {
+        return ErrorResponse(ErrorCode.INVALID_ACCESS_TOKEN)
     }
 }

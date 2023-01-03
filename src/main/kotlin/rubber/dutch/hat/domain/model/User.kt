@@ -17,7 +17,7 @@ data class User(
     val userId: UUID,
 
     @Column(name = "access_token")
-    val accessToken: String,
+    val accessToken: UUID,
 
     @Column(nullable = false)
     val name: String

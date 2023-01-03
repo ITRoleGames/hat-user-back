@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component
 import rubber.dutch.hat.domain.model.User
 import rubber.dutch.hat.domain.port.UserFinder
 import rubber.dutch.hat.domain.port.UserSaver
+import java.util.*
 
 @Component
 class UserPersistenceService(
@@ -14,7 +15,7 @@ class UserPersistenceService(
         return userRepository.save(user)
     }
 
-    override fun findByAccessToken(accessToken: String): User? {
+    override fun findByAccessToken(accessToken: UUID): User? {
         return userRepository.findByAccessToken(accessToken)
     }
 }
