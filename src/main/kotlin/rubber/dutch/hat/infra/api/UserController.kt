@@ -65,7 +65,7 @@ class UserController(
     }
 
     @ExceptionHandler(IllegalArgumentException::class)
-    fun IllegalArgumentError(): ErrorResponse {
+    fun invalidAccessTokenError(): ErrorResponse {
         return ErrorResponse(ErrorCode.INVALID_ACCESS_TOKEN)
     }
 }
