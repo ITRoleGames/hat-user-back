@@ -28,7 +28,7 @@ class UserController(
             ApiResponse(
                 responseCode = "200", description = "Пользователь создан"),
             ApiResponse(
-                responseCode = "422", description = "Бизнес-ошибка>"
+                responseCode = "422", description = "Бизнес-ошибка"
             )]
     )
     @PostMapping("/api/v1/users")
@@ -43,12 +43,14 @@ class UserController(
             ApiResponse(
                 responseCode = "200", description = "Получен текущий пользователь"),
             ApiResponse(
-                responseCode = "422", description = "Бизнес-ошибка>"
+                responseCode = "422", description = "Бизнес-ошибка"
             )]
     )
-    @GetMapping("/api/v1/users/current")
+    @GetMapping("/api/v1/user/current")
     fun currentUser(@RequestHeader headers: HttpHeaders): UserResponse {
-        return findUserUsecase.execute(headers)
+        val accessToken = headers.get(HttpHeaders.AUTHORIZATION)?.get(0)?.replace("Bearer ", "")
+            ?: throw AuthorizationHeaderNotFoundException()
+        return findUserUsecase.execute(accessToken)
     }
 
     @ExceptionHandler(UserNotFoundException::class)

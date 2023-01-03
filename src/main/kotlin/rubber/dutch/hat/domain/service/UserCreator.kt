@@ -14,13 +14,17 @@ class UserCreator(
     fun createUser(): User {
         val user = User(
             userId = generateUuid(),
-            accessToken = generateUuid(), //TODO: выяснить что с этим делать
+            accessToken = generateToken(), //TODO: выяснить что с этим делать
             name = nameGenerator.generateName()
         )
         return userSaver.save(user)
     }
 
-    private fun generateUuid(): String {
-        return UUID.randomUUID().toString().replace("-", "")
+    private fun generateUuid(): UUID {
+        return UUID.randomUUID()
+    }
+
+    private fun generateToken(): String {
+        return generateUuid().toString().replace("-", "")
     }
 }

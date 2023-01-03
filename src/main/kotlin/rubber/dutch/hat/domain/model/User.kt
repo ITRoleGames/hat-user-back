@@ -1,16 +1,20 @@
 package rubber.dutch.hat.domain.model
 
 import jakarta.persistence.*
+import org.hibernate.annotations.UuidGenerator
+import java.util.*
 
 @Entity
-@Table(name = "hat_user")
+@Table(name = "\"user\"",
+    indexes = [Index(name = "access_token_idx", columnList = "access_token")])
 data class User(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null,
+    @UuidGenerator
+    val id: UUID? = null,
 
     @Column(name = "user_id", nullable = false)
-    val userId: String,
+    val userId: UUID,
 
     @Column(name = "access_token")
     val accessToken: String,

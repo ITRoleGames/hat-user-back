@@ -11,6 +11,3 @@ spring:
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
-app:
-  game:
-    max-players: 8
