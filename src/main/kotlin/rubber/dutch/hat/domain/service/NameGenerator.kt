@@ -4,11 +4,10 @@ import org.springframework.stereotype.Component
 import rubber.dutch.hat.domain.port.UserFinder
 import kotlin.random.Random
 
+const val MAX_CHECK = 3
 @Component
 class NameGenerator(private val userFinder: UserFinder) {
-    //Для того случая если игроков будет больше чем доступных слов
-    //Когда будет честная генерация это можно будет удалить
-    var maxCheck = 3
+
     val generatedNames = listOf("Активированный Угорь",
         "Алхимический Металлист",
         "Анатомический Нонсенс",
@@ -61,16 +60,16 @@ class NameGenerator(private val userFinder: UserFinder) {
         "Красный Кровяной Телец")
 
     fun generateName(): String {
-        return checkForDublicateName(
-            generatedNames.get(Random.nextInt(0, generatedNames.size)))
-    }
-
-    fun checkForDublicateName(name: String): String {
-        if (userFinder.existsByName(name) && maxCheck > 0) {
-            maxCheck--
-            return generateName()
+        var name = getRandomNameFromList()
+        var maxDublicateCheck = MAX_CHECK
+        while (isDublicateName(name) && maxDublicateCheck > 0) {
+            name = getRandomNameFromList()
+            maxDublicateCheck--
         }
-        maxCheck = 3
         return name
     }
+
+    private fun getRandomNameFromList() = generatedNames.get(Random.nextInt(0, generatedNames.size))
+
+    private fun isDublicateName(name: String) = userFinder.existsByName(name)
 }
