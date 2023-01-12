@@ -2,7 +2,6 @@ package rubber.dutch.hat.infra.api
 
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.responses.ApiResponse
-import org.springframework.http.HttpHeaders
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
@@ -48,10 +47,8 @@ class UserController(
             )]
     )
     @GetMapping("/api/v1/user/current")
-    fun currentUser(@RequestHeader headers: HttpHeaders): UserResponse {
-        val accessToken = headers.get(HttpHeaders.AUTHORIZATION)?.get(0)?.replace("Bearer ", "")
-            ?: throw AuthorizationHeaderNotFoundException()
-        return findUserUsecase.execute(UUID.fromString(accessToken))
+    fun currentUser(@RequestHeader("user-id") id: String): UserResponse {
+        return findUserUsecase.execute(UUID.fromString(id))
     }
 
     @ExceptionHandler(UserNotFoundException::class)
