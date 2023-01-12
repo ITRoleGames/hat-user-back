@@ -14,7 +14,7 @@ class TokenController {
     /**
      * Получает на вход JWT токен и отдает данные включающие ID пользователя.
      */
-    @GetMapping("/api/v1/token/{token}")
+    @GetMapping("/api/v1/tokens/{token}")
     fun getToken(@PathVariable token: String): TokenDTO {
 
 //        throw ResponseStatusException(HttpStatus.NOT_FOUND)
