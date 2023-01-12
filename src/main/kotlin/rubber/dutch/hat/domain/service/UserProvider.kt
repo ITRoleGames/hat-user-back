@@ -6,10 +6,12 @@ import rubber.dutch.hat.domain.port.UserFinder
 import java.util.UUID
 
 @Component
-class UserProvider(
-    private val userFinder: UserFinder
-) {
+class UserProvider(private val userFinder: UserFinder) {
     fun findByAccessToken(accessToken: UUID): User? {
         return userFinder.findByAccessToken(accessToken)
+    }
+
+    fun existsByName(name: String): Boolean {
+        return userFinder.existsByName(name)
     }
 }

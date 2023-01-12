@@ -18,4 +18,9 @@ class UserPersistenceService(
     override fun findByAccessToken(accessToken: UUID): User? {
         return userRepository.findByAccessToken(accessToken)
     }
+
+    override fun existsByName(name: String): Boolean {
+        return userRepository.existsByName(name)
+    }
+
 }
