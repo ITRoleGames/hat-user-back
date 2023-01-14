@@ -6,6 +6,7 @@ plugins {
     kotlin("jvm") version "1.7.21"
     kotlin("plugin.spring") version "1.7.21"
     kotlin("plugin.jpa") version "1.7.21"
+    id("io.gitlab.arturbosch.detekt") version "1.22.0"
 }
 
 group = "rubber.dutch"
@@ -34,6 +35,7 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.testcontainers:junit-jupiter:1.17.6")
     testImplementation("org.testcontainers:postgresql:1.17.6")
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.22.0")
 }
 
 tasks.withType<KotlinCompile> {
@@ -49,4 +51,15 @@ tasks.getByName<Jar>("jar") {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+detekt {
+    source = objects.fileCollection().from(
+            io.gitlab.arturbosch.detekt.extensions.DetektExtension.DEFAULT_SRC_DIR_JAVA,
+            io.gitlab.arturbosch.detekt.extensions.DetektExtension.DEFAULT_TEST_SRC_DIR_JAVA,
+            io.gitlab.arturbosch.detekt.extensions.DetektExtension.DEFAULT_SRC_DIR_KOTLIN,
+            io.gitlab.arturbosch.detekt.extensions.DetektExtension.DEFAULT_TEST_SRC_DIR_KOTLIN,
+    )
+    buildUponDefaultConfig = true
+    baseline = file("$rootDir/config/detekt/baseline.xml")
 }
