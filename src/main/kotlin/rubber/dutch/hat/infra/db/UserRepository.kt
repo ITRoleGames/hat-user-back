@@ -6,4 +6,5 @@ import java.util.UUID
 
 interface UserRepository: JpaRepository<User, UUID> {
     fun findByAccessToken(accessToken: UUID): User?
+    fun existsByName(name: String): Boolean
 }

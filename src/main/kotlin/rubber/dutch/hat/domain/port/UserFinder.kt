@@ -5,4 +5,5 @@ import java.util.UUID
 
 interface UserFinder {
     fun findByAccessToken(accessToken: UUID): User?
+    fun existsByName(name: String): Boolean
 }
