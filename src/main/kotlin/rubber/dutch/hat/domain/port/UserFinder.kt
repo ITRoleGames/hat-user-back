@@ -4,6 +4,6 @@ import rubber.dutch.hat.domain.model.User
 import java.util.UUID
 
 interface UserFinder {
-    fun findByAccessToken(accessToken: UUID): User?
+    fun findById(id: UUID): User?
     fun existsByName(name: String): Boolean
 }
