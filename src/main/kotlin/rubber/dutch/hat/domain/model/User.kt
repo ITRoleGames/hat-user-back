@@ -13,11 +13,8 @@ data class User(
     @UuidGenerator
     val id: UUID? = null,
 
-    @Column(name = "user_id", nullable = false)
-    val userId: UUID,
-
     @Column(name = "access_token")
-    val accessToken: UUID,
+    var accessToken: String? = null,
 
     @Column(nullable = false)
     val name: String

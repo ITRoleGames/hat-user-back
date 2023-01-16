@@ -12,8 +12,8 @@ class CreateUserUsecase(
         val user = userCreator.createUser()
 
         return UserResponse(
-            id = user.userId,
-            accessToken = user.accessToken,
+            id = user.id!!,
+            accessToken = user.accessToken!!,
             name = user.name
         )
     }

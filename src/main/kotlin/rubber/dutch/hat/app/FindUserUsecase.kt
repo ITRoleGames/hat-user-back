@@ -10,13 +10,13 @@ import java.util.*
 class FindUserUsecase(
     private val userProvider: UserProvider
 ) {
-    fun execute(accessToken: UUID): UserResponse {
-        val user = userProvider.findByAccessToken(accessToken)
+    fun execute(id: UUID): UserResponse {
+        val user = userProvider.findById(id)
             ?: throw UserNotFoundException()
 
         return UserResponse(
-            id = user.userId,
-            accessToken = user.accessToken,
+            id = user.id!!,
+            accessToken = user.accessToken!!,
             name = user.name
         )
     }

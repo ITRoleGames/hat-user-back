@@ -3,24 +3,21 @@ package rubber.dutch.hat.domain.service
 import org.springframework.stereotype.Component
 import rubber.dutch.hat.domain.model.User
 import rubber.dutch.hat.domain.port.UserSaver
-import java.util.*
 
 @Component
 class UserCreator(
     private val nameGenerator: NameGenerator,
-    private val userSaver: UserSaver
+    private val userSaver: UserSaver,
+    private val tokenService: TokenService
 ) {
 
     fun createUser(): User {
         val user = User(
-            userId = generateUuid(),
-            accessToken = generateUuid(), //TODO: выяснить что с этим делать
             name = nameGenerator.generateName()
         )
-        return userSaver.save(user)
-    }
+        val createdUser = userSaver.save(user)
+        createdUser.accessToken = tokenService.generate(createdUser.id!!).token
 
-    private fun generateUuid(): UUID {
-        return UUID.randomUUID()
+        return userSaver.save(createdUser)
     }
 }

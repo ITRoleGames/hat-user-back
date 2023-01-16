@@ -8,7 +8,7 @@ data class UserResponse(
     val id: UUID,
 
     @field:Schema(description = "Сохраняется в local-storage для последующих запросов")
-    val accessToken: UUID,
+    val accessToken: String,
 
     @field:Schema(description = "Рандомно сгенерированное имя")
     val name: String

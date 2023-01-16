@@ -5,6 +5,6 @@ import rubber.dutch.hat.domain.model.User
 import java.util.UUID
 
 interface UserRepository: JpaRepository<User, UUID> {
-    fun findByAccessToken(accessToken: UUID): User?
+    override fun getReferenceById(id: UUID): User
     fun existsByName(name: String): Boolean
 }
