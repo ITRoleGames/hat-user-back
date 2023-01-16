@@ -12,7 +12,7 @@ import java.util.*
 
 @Component
 class TokenService(private val config: ConfigProperties) {
-    val key: Key = Keys.hmacShaKeyFor(config.secretKey.toByteArray())
+    private val key: Key = Keys.hmacShaKeyFor(config.secretKey.toByteArray())
 
     fun generate(id: UUID): TokenDtoResponse {
         val token =
