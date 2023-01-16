@@ -11,8 +11,6 @@ spring:
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
-    dbcp2:
-      default-schema: hat
 app:
   jwt:
     secret-key: E5J5rFgqJ#3XFzadeth535t4efdbt67i86yrfv234
