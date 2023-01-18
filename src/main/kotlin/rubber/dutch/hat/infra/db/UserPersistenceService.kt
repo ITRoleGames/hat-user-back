@@ -19,6 +19,10 @@ class UserPersistenceService(
         return userRepository.getReferenceById(id)
     }
 
+    override fun findByIds(ids: List<UUID>): List<User> {
+        return userRepository.findAllById(ids)
+    }
+
     override fun existsByName(name: String): Boolean {
         return userRepository.existsByName(name)
     }
