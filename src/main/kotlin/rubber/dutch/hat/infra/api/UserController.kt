@@ -29,6 +29,8 @@ class UserController(
                 ApiResponse(
                         responseCode = "200", description = "Список пользователей"),
                 ApiResponse(
+                        responseCode = "400", description = "Неверные параметры запроса"),
+                ApiResponse(
                         responseCode = "422", description = "Бизнес-ошибка"
                 )]
     )
