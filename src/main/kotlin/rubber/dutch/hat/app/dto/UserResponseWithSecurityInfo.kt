@@ -13,6 +13,5 @@ data class UserResponseWithSecurityInfo(
         val accessToken: String
 ) : AbstractUserResponse()
 
-
 fun User.toResponseWithSecurityInfo(): UserResponseWithSecurityInfo =
-        UserResponseWithSecurityInfo(id = id!!, name = name, accessToken = accessToken!!)
+        UserResponseWithSecurityInfo(id = id, name = name, accessToken = accessToken)

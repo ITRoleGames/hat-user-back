@@ -11,4 +11,4 @@ data class UserResponse(
         override val name: String
 ) : AbstractUserResponse()
 
-fun User.toResponse(): UserResponse = UserResponse(id = id!!, name = name)
+fun User.toResponse(): UserResponse = UserResponse(id = id, name = name)

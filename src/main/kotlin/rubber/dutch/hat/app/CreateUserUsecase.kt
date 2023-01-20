@@ -6,9 +6,7 @@ import rubber.dutch.hat.app.dto.toResponseWithSecurityInfo
 import rubber.dutch.hat.domain.service.UserCreator
 
 @Component
-class CreateUserUsecase(
-        private val userCreator: UserCreator
-) {
+class CreateUserUsecase(private val userCreator: UserCreator) {
     fun execute(): UserResponseWithSecurityInfo {
         return userCreator.createUser().toResponseWithSecurityInfo()
     }
