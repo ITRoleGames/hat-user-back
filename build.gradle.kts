@@ -62,4 +62,5 @@ detekt {
     )
     buildUponDefaultConfig = true
     baseline = file("$rootDir/config/detekt/baseline.xml")
+    config = files("$rootDir/config/detekt/detekt.yml","$rootDir/config/detekt/detekt-custom.yml")
 }

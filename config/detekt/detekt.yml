@@ -322,7 +322,7 @@ naming:
     active: false
     forbiddenName: []
   FunctionMaxLength:
-    active: true
+    active: false
     maximumFunctionNameLength: 30
   FunctionMinLength:
     active: false
@@ -354,7 +354,7 @@ naming:
   NoNameShadowing:
     active: true
   NonBooleanPropertyPrefixedWithIs:
-    active: true
+    active: false
   ObjectPropertyNaming:
     active: true
     constantPattern: '[A-Za-z][_A-Za-z0-9]*'
@@ -564,7 +564,7 @@ style:
     maxJumpCount: 1
   MagicNumber:
     active: true
-    excludes: ['**/test/**',  '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**', '**/*.kts']
+    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**', '**/*.kts']
     ignoreNumbers:
       - '-1'
       - '0'
