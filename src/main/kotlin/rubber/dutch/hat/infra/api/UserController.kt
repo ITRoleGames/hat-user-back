@@ -2,17 +2,18 @@ package rubber.dutch.hat.infra.api
 
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.responses.ApiResponse
+import jakarta.validation.ValidationException
 import org.springframework.data.repository.query.Param
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestHeader
+import org.springframework.web.bind.annotation.RestController
 import rubber.dutch.hat.app.CreateUserUsecase
 import rubber.dutch.hat.app.GetCurrentUserUsecase
 import rubber.dutch.hat.app.GetUsersUsecase
 import rubber.dutch.hat.app.dto.AbstractUserResponse
 import rubber.dutch.hat.app.dto.UserResponse
-import rubber.dutch.hat.domain.exception.AuthorizationHeaderNotFoundException
-import rubber.dutch.hat.domain.exception.UserNotFoundException
-import rubber.dutch.hat.infra.api.dto.ErrorCode
-import rubber.dutch.hat.infra.api.dto.ErrorResponse
+import rubber.dutch.hat.app.dto.UserResponseWithSecurityInfo
 import java.util.*
 
 @RestController
@@ -32,12 +33,15 @@ class UserController(
                 )]
     )
     @GetMapping("/api/v1/users")
-    fun getUsers(
-            @Param("ids") ids: Array<String>, //todo:  @ValidUuid validation
-            @RequestHeader("user-id") currentUserId: String
-    ): List<UserResponse> {
+    fun getUsers(@Param("ids") ids: Array<String>): List<UserResponse> {
 
-        return getUsersUsecase.execute(ids.map(UUID::fromString))
+        val uuidIds = try {
+            ids.map { UUID.fromString(it) }
+        } catch (ex: IllegalArgumentException) {
+            throw ValidationException("Request parameters are not valid UUIDs")
+        }
+
+        return getUsersUsecase.execute(uuidIds)
     }
 
     @Operation(
@@ -50,7 +54,7 @@ class UserController(
                 )]
     )
     @PostMapping("/api/v1/users")
-    fun createUser(): AbstractUserResponse {
+    fun createUser(): UserResponseWithSecurityInfo {
         return createUserUsecase.execute()
     }
 
@@ -68,20 +72,5 @@ class UserController(
     @GetMapping("/api/v1/user/current")
     fun currentUser(@RequestHeader("user-id") id: String): AbstractUserResponse {
         return getCurrentUserUsecase.execute(UUID.fromString(id))
-    }
-
-    @ExceptionHandler(UserNotFoundException::class)
-    fun currentUserNotFoundError(): ErrorResponse {
-        return ErrorResponse(ErrorCode.USER_NOT_FOUND)
-    }
-
-    @ExceptionHandler(AuthorizationHeaderNotFoundException::class)
-    fun authHeaderNotFoundError(): ErrorResponse {
-        return ErrorResponse(ErrorCode.AUTHORIZATION_HEADER_NOT_FOUND)
-    }
-
-    @ExceptionHandler(IllegalArgumentException::class)
-    fun invalidAccessTokenError(): ErrorResponse {
-        return ErrorResponse(ErrorCode.INVALID_ACCESS_TOKEN)
     }
 }

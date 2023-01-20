@@ -7,5 +7,6 @@ data class ErrorResponse(
 enum class ErrorCode {
     USER_NOT_FOUND,
     AUTHORIZATION_HEADER_NOT_FOUND,
-    INVALID_ACCESS_TOKEN
+    INVALID_ACCESS_TOKEN,
+    BAD_REQUEST
 }

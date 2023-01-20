@@ -1,21 +1,23 @@
 package rubber.dutch.hat.domain.model
 
 import jakarta.persistence.*
-import org.hibernate.annotations.UuidGenerator
 import java.util.*
 
 @Entity
 @Table(name = "\"user\"",
-    indexes = [Index(name = "access_token_idx", columnList = "access_token")])
-data class User(
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @UuidGenerator
-    val id: UUID? = null,
+        indexes = [Index(name = "access_token_idx", columnList = "access_token")])
+class User(
+        @Id
+        @Column(name = "id", nullable = false)
+        val id: UUID,
 
-    @Column(name = "access_token")
-    var accessToken: String? = null,
+        @Column(name = "access_token", nullable = false)
+        var accessToken: String,
 
-    @Column(nullable = false)
-    val name: String
-)
+        @Column(name = "name", nullable = false)
+        val name: String
+) : BaseEntity<UUID>() {
+    override fun getPrimaryId(): UUID {
+        return this.id
+    }
+}
