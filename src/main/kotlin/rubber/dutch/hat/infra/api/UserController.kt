@@ -12,8 +12,8 @@ import rubber.dutch.hat.app.CreateUserUsecase
 import rubber.dutch.hat.app.GetCurrentUserUsecase
 import rubber.dutch.hat.app.GetUsersUsecase
 import rubber.dutch.hat.app.dto.AbstractUserResponse
-import rubber.dutch.hat.app.dto.UserResponse
 import rubber.dutch.hat.app.dto.UserResponseWithSecurityInfo
+import rubber.dutch.hat.app.dto.UsersResponse
 import java.util.*
 
 @RestController
@@ -35,7 +35,7 @@ class UserController(
                 )]
     )
     @GetMapping("/api/v1/users")
-    fun getUsers(@Param("ids") ids: Array<String>): List<UserResponse> {
+    fun getUsers(@Param("ids") ids: Array<String>): UsersResponse {
 
         val uuidIds = try {
             ids.map { UUID.fromString(it) }
