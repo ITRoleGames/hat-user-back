@@ -21,8 +21,7 @@ abstract class BaseEntity<T> {
     @Column(nullable = false)
     lateinit var modified: Instant
 
-    abstract fun getPrimaryId(): T
-
+    abstract val id: T
     override fun equals(other: Any?): Boolean {
         other ?: return false
 
@@ -32,12 +31,12 @@ abstract class BaseEntity<T> {
 
         other as BaseEntity<*>
 
-        return getPrimaryId() != null && this.getPrimaryId() == other.getPrimaryId()
+        return this.id != null && this.id == other.id
     }
 
-    override fun hashCode() = getPrimaryId().hashCode()
+    override fun hashCode() = this.id.hashCode()
 
     override fun toString(): String {
-        return "${this.javaClass.simpleName} (id=${this.getPrimaryId()})"
+        return "${this.javaClass.simpleName} (id=${this.id})"
     }
 }

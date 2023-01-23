@@ -9,15 +9,11 @@ import java.util.*
 class User(
         @Id
         @Column(name = "id", nullable = false)
-        val id: UUID,
+        override val id: UUID,
 
         @Column(name = "access_token", nullable = false)
         var accessToken: String,
 
         @Column(name = "name", nullable = false)
         val name: String
-) : BaseEntity<UUID>() {
-    override fun getPrimaryId(): UUID {
-        return this.id
-    }
-}
+) : BaseEntity<UUID>()
