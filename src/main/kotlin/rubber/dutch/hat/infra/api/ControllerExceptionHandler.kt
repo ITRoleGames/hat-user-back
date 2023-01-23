@@ -1,6 +1,7 @@
 package rubber.dutch.hat.infra.api
 
 import jakarta.validation.ValidationException
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -14,18 +15,19 @@ import rubber.dutch.hat.infra.api.dto.ErrorResponse
 class ControllerExceptionHandler {
 
     @ExceptionHandler(UserNotFoundException::class)
-    fun currentUserNotFoundError(): ErrorResponse {
-        return ErrorResponse(ErrorCode.USER_NOT_FOUND)
+    fun currentUserNotFoundError(): ResponseEntity<ErrorResponse> {
+        return ResponseEntity.unprocessableEntity().body(ErrorResponse(ErrorCode.USER_NOT_FOUND))
     }
 
     @ExceptionHandler(AuthorizationHeaderNotFoundException::class)
-    fun authHeaderNotFoundError(): ErrorResponse {
-        return ErrorResponse(ErrorCode.AUTHORIZATION_HEADER_NOT_FOUND)
+    fun authHeaderNotFoundError(): ResponseEntity<ErrorResponse> {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(ErrorResponse(ErrorCode.AUTHORIZATION_HEADER_NOT_FOUND))
     }
 
     @ExceptionHandler(IllegalArgumentException::class)
-    fun invalidAccessTokenError(): ErrorResponse {
-        return ErrorResponse(ErrorCode.INVALID_ACCESS_TOKEN)
+    fun invalidAccessTokenError(): ResponseEntity<ErrorResponse> {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ErrorResponse(ErrorCode.INVALID_ACCESS_TOKEN))
     }
 
     @ExceptionHandler(value = [MethodArgumentTypeMismatchException::class, ValidationException::class])
