@@ -2,11 +2,7 @@ package rubber.dutch.hat.infra.api
 
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.responses.ApiResponse
-import org.springframework.web.bind.annotation.ExceptionHandler
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestHeader
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import rubber.dutch.hat.app.CreateUserUsecase
 import rubber.dutch.hat.app.FindUserUsecase
 import rubber.dutch.hat.app.dto.UserResponse
@@ -14,7 +10,7 @@ import rubber.dutch.hat.domain.exception.AuthorizationHeaderNotFoundException
 import rubber.dutch.hat.domain.exception.UserNotFoundException
 import rubber.dutch.hat.infra.api.dto.ErrorCode
 import rubber.dutch.hat.infra.api.dto.ErrorResponse
-import java.util.UUID
+import java.util.*
 
 @RestController
 class UserController(
@@ -59,10 +55,5 @@ class UserController(
     @ExceptionHandler(AuthorizationHeaderNotFoundException::class)
     fun authHeaderNotFoundError(): ErrorResponse {
         return ErrorResponse(ErrorCode.AUTHORIZATION_HEADER_NOT_FOUND)
-    }
-
-    @ExceptionHandler(IllegalArgumentException::class)
-    fun invalidAccessTokenError(): ErrorResponse {
-        return ErrorResponse(ErrorCode.INVALID_ACCESS_TOKEN)
     }
 }

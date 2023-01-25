@@ -1,11 +1,11 @@
 package rubber.dutch.hat.domain.service
 
-import io.jsonwebtoken.Claims
-import io.jsonwebtoken.Jws
-import io.jsonwebtoken.Jwts
+import io.jsonwebtoken.*
 import io.jsonwebtoken.security.Keys
+import io.jsonwebtoken.security.SignatureException
 import org.springframework.stereotype.Component
 import rubber.dutch.hat.app.dto.TokenDtoResponse
+import rubber.dutch.hat.domain.exception.InvalidAccessTokenException
 import java.security.Key
 import java.time.Instant
 import java.util.*
@@ -16,25 +16,38 @@ class TokenService(private val config: ConfigProperties) {
 
     fun generate(id: UUID): TokenDtoResponse {
         val token =
-                Jwts.builder()
-                        .setId(id.toString())
-                        .setIssuedAt(Date.from(Instant.now()))
-                        .setExpiration(Date.from(Instant.now().plusSeconds(config.expiration)))
-                        .signWith(key)
-                        .compact()
+            Jwts.builder()
+                .setId(id.toString())
+                .setIssuedAt(Date.from(Instant.now()))
+                .setExpiration(Date.from(Instant.now().plusSeconds(config.expiration)))
+                .signWith(key)
+                .compact()
         return TokenDtoResponse(
-                token = token,
-                expired = false,
-                userId = id
+            token = token,
+            expired = false,
+            userId = id
         )
     }
 
     fun decode(token: String): TokenDtoResponse {
-        val claims: Jws<Claims> = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token)
+
+        val claims: Jws<Claims> = try {
+            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token)
+        } catch (e: RuntimeException) {
+            when (e) {
+                is ExpiredJwtException -> throw InvalidAccessTokenException()
+                is UnsupportedJwtException -> throw InvalidAccessTokenException()
+                is MalformedJwtException -> throw InvalidAccessTokenException()
+                is SignatureException -> throw InvalidAccessTokenException()
+                is IllegalArgumentException -> throw InvalidAccessTokenException()
+            }
+            throw InvalidAccessTokenException()
+        }
+
         return TokenDtoResponse(
-                token = token,
-                isExpired(claims.body.expiration.time),
-                userId = UUID.fromString(claims.body.id)
+            token = token,
+            isExpired(claims.body.expiration.time),
+            userId = UUID.fromString(claims.body.id)
         )
     }
 
