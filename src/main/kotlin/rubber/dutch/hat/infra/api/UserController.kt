@@ -2,7 +2,6 @@ package rubber.dutch.hat.infra.api
 
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.responses.ApiResponse
-import org.springframework.web.bind.annotation.*
 import jakarta.validation.ValidationException
 import org.springframework.data.repository.query.Param
 import org.springframework.web.bind.annotation.GetMapping
@@ -10,10 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RestController
 import rubber.dutch.hat.app.CreateUserUsecase
-import rubber.dutch.hat.domain.exception.AuthorizationHeaderNotFoundException
-import rubber.dutch.hat.domain.exception.UserNotFoundException
-import rubber.dutch.hat.infra.api.dto.ErrorCode
-import rubber.dutch.hat.infra.api.dto.ErrorResponse
 import java.util.*
 import rubber.dutch.hat.app.GetCurrentUserUsecase
 import rubber.dutch.hat.app.GetUsersUsecase
@@ -79,15 +74,5 @@ class UserController(
     @GetMapping("/api/v1/user/current")
     fun currentUser(@RequestHeader("user-id") id: String): AbstractUserResponse {
         return getCurrentUserUsecase.execute(UUID.fromString(id))
-    }
-
-    @ExceptionHandler(UserNotFoundException::class)
-    fun currentUserNotFoundError(): ErrorResponse {
-        return ErrorResponse(ErrorCode.USER_NOT_FOUND)
-    }
-
-    @ExceptionHandler(AuthorizationHeaderNotFoundException::class)
-    fun authHeaderNotFoundError(): ErrorResponse {
-        return ErrorResponse(ErrorCode.AUTHORIZATION_HEADER_NOT_FOUND)
     }
 }

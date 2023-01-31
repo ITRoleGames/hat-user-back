@@ -1,3 +1,3 @@
 package rubber.dutch.hat.domain.exception
 
-class InvalidAccessTokenException(cause: Throwable): RuntimeException() {}
+class InvalidAccessTokenException(cause: Throwable): RuntimeException()

@@ -15,8 +15,8 @@ class TokenServiceTest {
 
         val actual = tokenService.generate(id)
 
-        Assertions.assertEquals(actual.userId, id)
-        Assertions.assertEquals(actual.expired, false)
+        Assertions.assertEquals(id, actual.userId)
+        Assertions.assertEquals(false, actual.expired)
     }
 
     @Test
@@ -26,9 +26,9 @@ class TokenServiceTest {
 
         val response = tokenService.decode(token)
 
-        Assertions.assertEquals(response.token, token)
-        Assertions.assertEquals(response.userId, id)
-        Assertions.assertEquals(response.expired, false)
+        Assertions.assertEquals(token,response.token, )
+        Assertions.assertEquals(id,response.userId)
+        Assertions.assertEquals(false, response.expired)
     }
 
     @Test
