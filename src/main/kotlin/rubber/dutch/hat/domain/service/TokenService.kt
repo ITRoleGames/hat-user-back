@@ -1,8 +1,10 @@
 package rubber.dutch.hat.domain.service
 
-import io.jsonwebtoken.*
+import io.jsonwebtoken.Claims
+import io.jsonwebtoken.ExpiredJwtException
+import io.jsonwebtoken.Jws
+import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys
-import io.jsonwebtoken.security.SignatureException
 import org.springframework.stereotype.Component
 import rubber.dutch.hat.app.dto.TokenDtoResponse
 import rubber.dutch.hat.domain.exception.InvalidAccessTokenException
@@ -33,15 +35,13 @@ class TokenService(private val config: ConfigProperties) {
 
         val claims: Jws<Claims> = try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token)
-        } catch (e: RuntimeException) {
+        } catch (e: Exception) {
             when (e) {
-                is ExpiredJwtException -> throw InvalidAccessTokenException()
-                is UnsupportedJwtException -> throw InvalidAccessTokenException()
-                is MalformedJwtException -> throw InvalidAccessTokenException()
-                is SignatureException -> throw InvalidAccessTokenException()
-                is IllegalArgumentException -> throw InvalidAccessTokenException()
+                is ExpiredJwtException -> {
+                    return TokenDtoResponse(token, true, UUID.fromString(e.claims.id))
+                }
             }
-            throw InvalidAccessTokenException()
+            throw InvalidAccessTokenException(e)
         }
 
         return TokenDtoResponse(

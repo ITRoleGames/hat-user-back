@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RestController
 import rubber.dutch.hat.app.CreateUserUsecase
-import rubber.dutch.hat.app.FindUserUsecase
-import rubber.dutch.hat.app.dto.UserResponse
 import rubber.dutch.hat.domain.exception.AuthorizationHeaderNotFoundException
 import rubber.dutch.hat.domain.exception.UserNotFoundException
 import rubber.dutch.hat.infra.api.dto.ErrorCode
@@ -22,7 +20,6 @@ import rubber.dutch.hat.app.GetUsersUsecase
 import rubber.dutch.hat.app.dto.AbstractUserResponse
 import rubber.dutch.hat.app.dto.UserResponseWithSecurityInfo
 import rubber.dutch.hat.app.dto.UsersResponse
-import java.util.*
 
 @RestController
 class UserController(
@@ -82,9 +79,6 @@ class UserController(
     @GetMapping("/api/v1/user/current")
     fun currentUser(@RequestHeader("user-id") id: String): AbstractUserResponse {
         return getCurrentUserUsecase.execute(UUID.fromString(id))
-    }
-    fun currentUser(@RequestHeader("user-id") id: String): UserResponse {
-        return findUserUsecase.execute(UUID.fromString(id))
     }
 
     @ExceptionHandler(UserNotFoundException::class)

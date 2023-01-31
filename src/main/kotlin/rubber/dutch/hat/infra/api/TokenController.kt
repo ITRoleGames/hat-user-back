@@ -1,5 +1,6 @@
 package rubber.dutch.hat.infra.api
 
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.GetMapping
@@ -28,6 +29,6 @@ class TokenController(private val tokenService: TokenService) {
 
     @ExceptionHandler(InvalidAccessTokenException::class)
     fun invalidAccessTokenError(exception: InvalidAccessTokenException): ResponseEntity<ErrorResponse> {
-        return ResponseEntity.unprocessableEntity().body(ErrorResponse(ErrorCode.INVALID_ACCESS_TOKEN))
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ErrorResponse(ErrorCode.INVALID_ACCESS_TOKEN))
     }
 }
