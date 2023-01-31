@@ -7,12 +7,12 @@ spring:
     hibernate:
       ddl-auto: create-drop
   datasource:
-    url: jdbc:postgresql://${APP_HOST:localhost}:${DB_PORT:5432}/hat_user
+    url: jdbc:postgresql://${APP_HOST:localhost}:${DB_PORT:5401}/hat_user
     username: ${DB_USER:hat_user}
     password: ${DB_PASSWORD:test1234}
     driver-class-name: org.postgresql.Driver
     hikari:
-      schema: user
+      schema: hat_user
 app:
   jwt:
     secret-key: E5J5rFgqJ#3XFzadeth535t4efdbt67i86yrfv234
