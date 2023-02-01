@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RestController
 import rubber.dutch.hat.app.CreateUserUsecase
+import java.util.*
 import rubber.dutch.hat.app.GetCurrentUserUsecase
 import rubber.dutch.hat.app.GetUsersUsecase
 import rubber.dutch.hat.app.dto.AbstractUserResponse
 import rubber.dutch.hat.app.dto.UserResponseWithSecurityInfo
 import rubber.dutch.hat.app.dto.UsersResponse
-import java.util.*
 
 @RestController
 class UserController(
