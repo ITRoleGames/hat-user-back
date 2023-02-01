@@ -46,7 +46,7 @@ class TokenService(private val config: ConfigProperties) {
 
         return TokenDtoResponse(
             token = token,
-            isExpired(claims.body.expiration.time),
+            expired = isExpired(claims.body.expiration.time),
             userId = UUID.fromString(claims.body.id)
         )
     }
