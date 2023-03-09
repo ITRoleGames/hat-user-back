@@ -16,26 +16,25 @@ import org.testcontainers.junit.jupiter.Testcontainers
 @AutoConfigureMockMvc
 class BaseApplicationTest {
 
-  @Autowired
-  lateinit var mockMvc: MockMvc
+    @Autowired
+    lateinit var mockMvc: MockMvc
 
-  @Autowired
-  lateinit var objectMapper: ObjectMapper
+    @Autowired
+    lateinit var objectMapper: ObjectMapper
 
-  companion object {
-    @JvmStatic
-    private val postgreSQLContainer =
-      PostgreSQLContainer("postgres:12-alpine").waitingFor(Wait.defaultWaitStrategy()).apply { start() }
+    companion object {
+        @JvmStatic
+        private val postgreSQLContainer =
+            PostgreSQLContainer("postgres:12-alpine").waitingFor(Wait.defaultWaitStrategy()).apply { start() }
 
-    @DynamicPropertySource
-    @JvmStatic
-    fun initProperties(registry: DynamicPropertyRegistry) {
-      registry.add("spring.datasource.url") { "jdbc:tc:postgresql:12:///${postgreSQLContainer.databaseName}" }
-      registry.add("spring.datasource.username") { postgreSQLContainer.username }
-      registry.add("spring.datasource.password") { postgreSQLContainer.password }
-      registry.add("spring.datasource.driverClassName") { "org.testcontainers.jdbc.ContainerDatabaseDriver" }
-      registry.add("application.version") { "1.0.0" }
+        @DynamicPropertySource
+        @JvmStatic
+        fun initProperties(registry: DynamicPropertyRegistry) {
+            registry.add("spring.datasource.url") { "jdbc:tc:postgresql:12:///${postgreSQLContainer.databaseName}" }
+            registry.add("spring.datasource.username") { postgreSQLContainer.username }
+            registry.add("spring.datasource.password") { postgreSQLContainer.password }
+            registry.add("spring.datasource.driverClassName") { "org.testcontainers.jdbc.ContainerDatabaseDriver" }
+            registry.add("application.version") { "1.0.0" }
+        }
     }
-  }
-
 }

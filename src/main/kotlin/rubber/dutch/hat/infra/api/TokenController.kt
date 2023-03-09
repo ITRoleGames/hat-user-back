@@ -23,12 +23,11 @@ class TokenController(private val tokenService: TokenService) {
      */
     @GetMapping("/api/v1/tokens/{token}")
     fun getToken(@PathVariable token: String): TokenDtoResponse {
-
         return tokenService.decode(token)
     }
 
     @ExceptionHandler(InvalidAccessTokenException::class)
-    fun invalidAccessTokenError(exception: InvalidAccessTokenException): ResponseEntity<ErrorResponse> {
+    fun invalidAccessTokenError(): ResponseEntity<ErrorResponse> {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ErrorResponse(ErrorCode.INVALID_ACCESS_TOKEN))
     }
 }

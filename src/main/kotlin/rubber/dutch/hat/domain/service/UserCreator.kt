@@ -7,17 +7,17 @@ import java.util.*
 
 @Component
 class UserCreator(
-        private val nameGenerator: NameGenerator,
-        private val userSaver: UserSaver,
-        private val tokenService: TokenService
+    private val nameGenerator: NameGenerator,
+    private val userSaver: UserSaver,
+    private val tokenService: TokenService
 ) {
 
     fun createUser(): User {
         val userId = UUID.randomUUID()
         val user = User(
-                id = userId,
-                accessToken = tokenService.generate(userId).token,
-                name = nameGenerator.generateName()
+            id = userId,
+            accessToken = tokenService.generate(userId).token,
+            name = nameGenerator.generateName()
         )
         return userSaver.save(user)
     }

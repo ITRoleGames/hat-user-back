@@ -9,11 +9,11 @@ import java.util.*
 
 @Component
 class GetCurrentUserUsecase(
-        private val userProvider: UserProvider
+    private val userProvider: UserProvider
 ) {
     fun execute(id: UUID): UserResponseWithSecurityInfo {
         val user = userProvider.findById(id)
-                ?: throw UserNotFoundException()
+            ?: throw UserNotFoundException()
 
         return user.toResponseWithSecurityInfo()
     }

@@ -22,7 +22,7 @@ class ControllerExceptionHandler {
     @ExceptionHandler(AuthorizationHeaderNotFoundException::class)
     fun authHeaderNotFoundError(): ResponseEntity<ErrorResponse> {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                .body(ErrorResponse(ErrorCode.AUTHORIZATION_HEADER_NOT_FOUND))
+            .body(ErrorResponse(ErrorCode.AUTHORIZATION_HEADER_NOT_FOUND))
     }
 
     @ExceptionHandler(IllegalArgumentException::class)
@@ -31,7 +31,7 @@ class ControllerExceptionHandler {
     }
 
     @ExceptionHandler(value = [MethodArgumentTypeMismatchException::class, ValidationException::class])
-    fun handleValidationException(ex: Any): ResponseEntity<ErrorResponse> {
+    fun handleValidationException(): ResponseEntity<ErrorResponse> {
         return ResponseEntity.badRequest().body(ErrorResponse(ErrorCode.BAD_REQUEST))
     }
 }

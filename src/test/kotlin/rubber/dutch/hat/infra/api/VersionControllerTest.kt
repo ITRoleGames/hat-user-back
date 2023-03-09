@@ -1,6 +1,5 @@
 package rubber.dutch.hat.infra.api
 
-
 import org.junit.jupiter.api.Test
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.get
@@ -17,5 +16,4 @@ internal class VersionControllerTest : BaseApplicationTest() {
                 jsonPath("version") { value("1.0.0") }
             }
     }
-
 }
