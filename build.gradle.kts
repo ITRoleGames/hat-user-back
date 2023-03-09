@@ -7,6 +7,7 @@ plugins {
     kotlin("plugin.spring") version "1.7.21"
     kotlin("plugin.jpa") version "1.7.21"
     id("io.gitlab.arturbosch.detekt") version "1.22.0"
+    id("jacoco")
     id("com.palantir.git-version") version "1.0.0"
 }
 
@@ -61,6 +62,23 @@ tasks.withType<Test> {
 
 tasks.processResources {
     expand("version" to project.version)
+}
+
+tasks.test {
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+    reports {
+        xml.required.set(true)
+        csv.required.set(false)
+        html.required.set(false)
+    }
+}
+
+jacoco {
+    toolVersion = "0.8.7"
 }
 
 detekt {
