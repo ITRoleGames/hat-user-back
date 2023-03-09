@@ -1,5 +1,7 @@
 server:
   port: 9001
+application:
+  version: ${version}
 spring:
   application:
     name: user-service
@@ -7,9 +9,9 @@ spring:
     hibernate:
       ddl-auto: create-drop
   datasource:
-    url: jdbc:postgresql://${APP_HOST:localhost}:${DB_PORT:5401}/hat_user
-    username: ${DB_USER:hat_user}
-    password: ${DB_PASSWORD:test1234}
+    url: jdbc:postgresql://\${APP_HOST:localhost}:\${DB_PORT:5401}/hat_user
+    username: \${DB_USER:hat_user}
+    password: \${DB_PASSWORD:test1234}
     driver-class-name: org.postgresql.Driver
     hikari:
       schema: hat_user
