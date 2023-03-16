@@ -5,10 +5,12 @@ import rubber.dutch.hat.domain.port.UserFinder
 import kotlin.random.Random
 
 const val MAX_CHECK = 3
+
 @Component
 class NameGenerator(private val userFinder: UserFinder) {
 
-    val generatedNames = listOf("Активированный Угорь",
+    val generatedNames = listOf(
+        "Активированный Угорь",
         "Алхимический Металлист",
         "Анатомический Нонсенс",
         "Андед-Мороз",
@@ -57,7 +59,8 @@ class NameGenerator(private val userFinder: UserFinder) {
         "Книжный Червь",
         "Конёк-рагнарёк",
         "Корейский Рандом",
-        "Красный Кровяной Телец")
+        "Красный Кровяной Телец"
+    )
 
     fun generateName(): String {
         var name = getRandomNameFromList()

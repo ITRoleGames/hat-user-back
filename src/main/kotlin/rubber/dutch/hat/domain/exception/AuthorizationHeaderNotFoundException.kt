@@ -1,3 +1,3 @@
 package rubber.dutch.hat.domain.exception
 
-class AuthorizationHeaderNotFoundException : RuntimeException() {}
+class AuthorizationHeaderNotFoundException : RuntimeException()

@@ -9,7 +9,7 @@ import java.util.*
 @Component
 class UserPersistenceService(
     private val userRepository: UserRepository
-): UserSaver, UserFinder {
+) : UserSaver, UserFinder {
 
     override fun save(user: User): User {
         return userRepository.save(user)
@@ -26,5 +26,4 @@ class UserPersistenceService(
     override fun existsByName(name: String): Boolean {
         return userRepository.existsByName(name)
     }
-
 }

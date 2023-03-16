@@ -17,13 +17,13 @@ internal class UserControllerTest : BaseApplicationTest() {
     @Test
     fun `create user success`() {
         callCreateUser()
-                .andExpect {
-                    status { isOk() }
-                    content { contentType(MediaType.APPLICATION_JSON) }
-                    jsonPath("id") { isNotEmpty() }
-                    jsonPath("name") { isNotEmpty() }
-                    jsonPath("accessToken") { isNotEmpty() }
-                }
+            .andExpect {
+                status { isOk() }
+                content { contentType(MediaType.APPLICATION_JSON) }
+                jsonPath("id") { isNotEmpty() }
+                jsonPath("name") { isNotEmpty() }
+                jsonPath("accessToken") { isNotEmpty() }
+            }
     }
 
     @Test
@@ -35,10 +35,10 @@ internal class UserControllerTest : BaseApplicationTest() {
         val createdUser2: UserResponseWithSecurityInfo = objectMapper.readValue(createUserResponse2.contentAsString)
 
         val getUsersResponse = callGetUsers(listOf(createdUser.id, createdUser2.id), createdUser.id)
-                .andExpect {
-                    status { isOk() }
-                    content { contentType(MediaType.APPLICATION_JSON) }
-                }.andReturn().response
+            .andExpect {
+                status { isOk() }
+                content { contentType(MediaType.APPLICATION_JSON) }
+            }.andReturn().response
 
         val usersResponse: UsersResponse = objectMapper.readValue(getUsersResponse.contentAsString)
         Assertions.assertNotNull(usersResponse.users)
@@ -53,13 +53,13 @@ internal class UserControllerTest : BaseApplicationTest() {
         val createUserResponse: UserResponseWithSecurityInfo = objectMapper.readValue(mockResponse.contentAsString)
 
         callGetCurrentUser(createUserResponse.id)
-                .andExpect {
-                    status { isOk() }
-                    content { contentType(MediaType.APPLICATION_JSON) }
-                    jsonPath("id") { isNotEmpty() }
-                    jsonPath("name") { isNotEmpty() }
-                    jsonPath("accessToken") { isNotEmpty() }
-                }
+            .andExpect {
+                status { isOk() }
+                content { contentType(MediaType.APPLICATION_JSON) }
+                jsonPath("id") { isNotEmpty() }
+                jsonPath("name") { isNotEmpty() }
+                jsonPath("accessToken") { isNotEmpty() }
+            }
     }
 
     private fun callCreateUser(): ResultActionsDsl {

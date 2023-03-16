@@ -6,10 +6,12 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan
 
 @SpringBootApplication
 @ConfigurationPropertiesScan
-class HatUserBackApplication{
+@Suppress("UtilityClassWithPublicConstructor")
+class HatUserBackApplication {
 
     companion object {
         @JvmStatic
+        @Suppress("SpreadOperator")
         fun main(args: Array<String>) {
             SpringApplication.run(HatUserBackApplication::class.java, *args)
         }
