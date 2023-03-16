@@ -37,7 +37,7 @@ class TokenService(private val config: ConfigProperties) {
                     return TokenDtoResponse(token, true, UUID.fromString(e.claims.id))
                 }
             }
-            throw InvalidAccessTokenException()
+            throw InvalidAccessTokenException(e)
         }
 
         return TokenDtoResponse(
